@@ -63,7 +63,7 @@ public class DateConverter {
 
     public static Calendar millisToCalendar(Long millis) {
         Calendar val = Calendar.getInstance();
-        if (millis == null) {
+        if (millis == null || millis < 0) {
             return val;
         }
 
