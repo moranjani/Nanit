@@ -23,11 +23,11 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import moranjani.nanitbday.IDetailsFragment;
 import moranjani.nanitbday.R;
 import moranjani.nanitbday.Utils.DateConverter;
+import moranjani.nanitbday.Utils.GeneralUtils;
 import moranjani.nanitbday.databinding.DetailsScreenBinding;
 import moranjani.nanitbday.view_models.MainActivityViewModel;
 import pl.aprilapps.easyphotopicker.DefaultCallback;
@@ -56,6 +56,7 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
         binding =  DataBindingUtil.inflate(inflater, R.layout.details_screen, container, false);
         binding.setModel(viewModel);
         binding.setIDetailsFragment(this);
+        binding.setLifecycleOwner(this);
         setListeners();
 
         View v = binding.getRoot();
@@ -71,7 +72,7 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
             public void onImagesPicked(@NonNull List<File> imageFiles,
                                        EasyImage.ImageSource source, int type) {
                 if (imageFiles.size() > 0 && imageFiles.get(0) != null) {
-                    viewModel.pictureUri.setValue(imageFiles.get(0).getPath());
+                    viewModel.getPictureUri().setValue(imageFiles.get(0).getPath());
                 }
             }
 
@@ -82,6 +83,7 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
         binding.birthDateEditText.setShowSoftInputOnFocus(false);
         binding.birthDateEditText.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
+                GeneralUtils.hideKeyboard(binding.birthDateEditText);
                 showDatePickerDialog();
             }
         });
@@ -94,22 +96,8 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                viewModel.name.setValue(s.toString());
-                viewModel.getButtonEnabled();
-            }
-        });
-
-        viewModel.getButtonEnabled().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                binding.continueButton.setEnabled(aBoolean);
-            }
-        });
-
-        viewModel.getPictureUri().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String uri) {
-                binding.pictureTextView.setText(uri);
+                viewModel.getName().setValue(s.toString());
+                viewModel.refreshButtonEnabledState();
             }
         });
 
@@ -119,12 +107,7 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
                 onAddPhotoClickListener();
             }
         });
-
-
-
-
     }
-
 
 
     @Override
@@ -146,14 +129,13 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
                         calendar.set(Calendar.MONTH, monthOfYear);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         long selectedDate = calendar.getTimeInMillis();
-                        viewModel.birthDate.setValue(selectedDate);
-                        binding.birthDateEditText.setText(DateConverter.dateToString(selectedDate));
-                        viewModel.getButtonEnabled();
+                        viewModel.getBirthDate().setValue(selectedDate);
+                        viewModel.refreshButtonEnabledState();
                     }
                 };
 
 
-        Calendar markedDate = DateConverter.millisToCalendar(viewModel.birthDate.getValue());
+        Calendar markedDate = DateConverter.millisToCalendar(viewModel.getBirthDate().getValue());
         final long maxTime = Calendar.getInstance().getTimeInMillis();
         int mYear = markedDate.get(Calendar.YEAR);
         int mMonth = markedDate.get(Calendar.MONTH);

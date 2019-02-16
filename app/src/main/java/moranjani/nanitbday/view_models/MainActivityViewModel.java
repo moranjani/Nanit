@@ -15,11 +15,10 @@ public class MainActivityViewModel extends AndroidViewModel {
     public static final String BDATE_KEY = "moranjani.nanitbday.view_models.bdate_key";
     public static final String URI_KEY = "moranjani.nanitbday.view_models.uri_key";
 
-
-    public MutableLiveData<String> name = new MutableLiveData<>();
-    public MutableLiveData<Long> birthDate = new MutableLiveData<>();
-    public MutableLiveData<String> pictureUri = new MutableLiveData<>();
-    public MutableLiveData<Boolean> buttonEnabled = new MutableLiveData<>();
+    MutableLiveData<String> name = new MutableLiveData<>();
+    MutableLiveData<Long> birthDate = new MutableLiveData<>();
+    MutableLiveData<String> pictureUri = new MutableLiveData<>();
+    MutableLiveData<Boolean> buttonEnabled = new MutableLiveData<>();
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
@@ -44,8 +43,15 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
 
+    public void refreshButtonEnabledState() {
+        buttonEnabled.setValue(!TextUtils.isEmpty(name.getValue()) &&
+                birthDate.getValue()!= null &&
+                birthDate.getValue() > 0 );
+    }
+
+
+
     public MutableLiveData<Boolean> getButtonEnabled() {
-        buttonEnabled.setValue(!TextUtils.isEmpty(name.getValue()) && birthDate.getValue()!= null && birthDate.getValue() > 0 );
         return buttonEnabled;
     }
 
@@ -60,4 +66,6 @@ public class MainActivityViewModel extends AndroidViewModel {
     public MutableLiveData<String> getName() {
         return name;
     }
+
+
 }
