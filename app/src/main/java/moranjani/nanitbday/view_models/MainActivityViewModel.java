@@ -18,7 +18,7 @@ public class MainActivityViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> name = new MutableLiveData<>();
     public MutableLiveData<Long> birthDate = new MutableLiveData<>();
-    String pictureUri;
+    public MutableLiveData<String> pictureUri = new MutableLiveData<>();
     public MutableLiveData<Boolean> buttonEnabled = new MutableLiveData<>();
 
     public MainActivityViewModel(@NonNull Application application) {
@@ -31,7 +31,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         SharedPreferences sharedPref = GeneralUtils.getSharedPrefs(getApplication());
         name.setValue(sharedPref.getString(NAME_KEY, null));
         birthDate.setValue(sharedPref.getLong(BDATE_KEY, -1));
-        pictureUri = sharedPref.getString(URI_KEY, null);
+        pictureUri.setValue(sharedPref.getString(URI_KEY, null));
     }
 
     public void persistData() {
@@ -39,18 +39,25 @@ public class MainActivityViewModel extends AndroidViewModel {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(NAME_KEY, name.getValue()).
                 putLong(BDATE_KEY, birthDate.getValue() == null ? -1L : birthDate.getValue()).
-                putString(URI_KEY, pictureUri).
+                putString(URI_KEY, pictureUri.getValue()).
                 apply();
-    }
-
-
-    public String getPictureUri() {
-        return pictureUri;
     }
 
 
     public MutableLiveData<Boolean> getButtonEnabled() {
         buttonEnabled.setValue(!TextUtils.isEmpty(name.getValue()) && birthDate.getValue()!= null && birthDate.getValue() > 0 );
         return buttonEnabled;
+    }
+
+    public MutableLiveData<String> getPictureUri() {
+        return pictureUri;
+    }
+
+    public MutableLiveData<Long> getBirthDate() {
+        return birthDate;
+    }
+
+    public MutableLiveData<String> getName() {
+        return name;
     }
 }

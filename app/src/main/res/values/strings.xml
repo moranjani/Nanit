@@ -8,4 +8,7 @@
     <string name="picture_title">Picture</string>
     <string name="show_birthday_screen">Show Birthday Screen</string>
     <string name="photo_hint">Take a photo or select from gallery</string>
+    <string name="btn_general_ok">OK</string>
+    <string name="btn_general_cancel">Cancel</string>
+    <string name="change_permissions_manually_popup">Please add permission</string>
 </resources>

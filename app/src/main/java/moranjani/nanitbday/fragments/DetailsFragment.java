@@ -1,6 +1,10 @@
 package moranjani.nanitbday.fragments;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,11 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -23,6 +30,8 @@ import moranjani.nanitbday.R;
 import moranjani.nanitbday.Utils.DateConverter;
 import moranjani.nanitbday.databinding.DetailsScreenBinding;
 import moranjani.nanitbday.view_models.MainActivityViewModel;
+import pl.aprilapps.easyphotopicker.DefaultCallback;
+import pl.aprilapps.easyphotopicker.EasyImage;
 
 public class DetailsFragment extends Fragment implements IDetailsFragment {
 
@@ -30,6 +39,7 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
         return new DetailsFragment();
     }
 
+    private static final int PERMISSION_CAMERA_REQUEST_CODE = 1;
     MainActivityViewModel viewModel;
     DetailsScreenBinding binding;
 
@@ -50,6 +60,22 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
 
         View v = binding.getRoot();
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        EasyImage.handleActivityResult(requestCode, resultCode, data, getActivity(), new DefaultCallback() {
+            @Override
+            public void onImagesPicked(@NonNull List<File> imageFiles,
+                                       EasyImage.ImageSource source, int type) {
+                if (imageFiles.size() > 0 && imageFiles.get(0) != null) {
+                    viewModel.pictureUri.setValue(imageFiles.get(0).getPath());
+                }
+            }
+
+        });
     }
 
     private void setListeners() {
@@ -80,8 +106,26 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
             }
         });
 
+        viewModel.getPictureUri().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String uri) {
+                binding.pictureTextView.setText(uri);
+            }
+        });
+
+        binding.pictureTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onAddPhotoClickListener();
+            }
+        });
+
+
+
 
     }
+
+
 
     @Override
     public void onBirthDateClicked() {
@@ -118,4 +162,30 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
         datePickerDialog.getDatePicker().setMaxDate(maxTime);
         datePickerDialog.show();
     }
+
+
+    private void onAddPhotoClickListener() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA},
+                    PERMISSION_CAMERA_REQUEST_CODE);
+        } else {
+            EasyImage.openChooserWithGallery(this, null, 0);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_CAMERA_REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    EasyImage.openChooserWithGallery(this, null, 0);
+                }
+            }
+        }
+    }
+
+
 }
