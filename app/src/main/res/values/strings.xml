@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">NanitBDay</string>
+    <string name="app_title">Nanit Happy Birthday App</string>
+    <string name="name_title">Name</string>
+    <string name="name_hint">Please enter the name</string>
+    <string name="select_a_date">Please select the birth date</string>
+    <string name="birth_date_title">Birth Date</string>
+    <string name="picture_title">Picture</string>
+    <string name="show_birthday_screen">Show Birthday Screen</string>
+    <string name="photo_hint">Take a photo or select from gallery</string>
 </resources>
