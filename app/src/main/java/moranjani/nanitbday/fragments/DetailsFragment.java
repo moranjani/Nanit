@@ -24,7 +24,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import moranjani.nanitbday.IDetailsFragment;
 import moranjani.nanitbday.R;
 import moranjani.nanitbday.Utils.DateConverter;
 import moranjani.nanitbday.Utils.GeneralUtils;
@@ -100,19 +99,22 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
                 viewModel.refreshButtonEnabledState();
             }
         });
-
-        binding.pictureTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onAddPhotoClickListener();
-            }
-        });
     }
 
 
     @Override
     public void onBirthDateClicked() {
         showDatePickerDialog();
+    }
+
+    @Override
+    public void onContinueButtonClicked() {
+        viewModel.getMoveToBirthdayScreen().setValue(true);
+    }
+
+    @Override
+    public void onSelectPictureClicked() {
+        onAddPhotoClickListener();
     }
 
     private void showDatePickerDialog() {

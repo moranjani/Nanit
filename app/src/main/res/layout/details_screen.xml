@@ -5,13 +5,14 @@
     <data>
         <import type="moranjani.nanitbday.Utils.DateConverter"/>
         <variable name="model" type="moranjani.nanitbday.view_models.MainActivityViewModel"/>
-        <variable name="iDetailsFragment" type="moranjani.nanitbday.IDetailsFragment"/>
+        <variable name="iDetailsFragment" type="moranjani.nanitbday.fragments.IDetailsFragment"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:id="@+id/content"
@@ -90,7 +91,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:hint="@string/photo_hint"
-                android:text="@{model.pictureUri}"/>
+                android:text="@{model.pictureUri}"
+                android:onClick="@{() -> iDetailsFragment.onSelectPictureClicked()}"/>
 
         </LinearLayout>
 
@@ -98,12 +100,13 @@
             android:id="@+id/continue_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="@{model.buttonEnabled}"
+            android:enabled="@{safeUnbox(model.buttonEnabled)}"
             android:text="@string/show_birthday_screen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/content" />
+            app:layout_constraintTop_toBottomOf="@+id/content"
+            android:onClick="@{() -> iDetailsFragment.onContinueButtonClicked()}"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

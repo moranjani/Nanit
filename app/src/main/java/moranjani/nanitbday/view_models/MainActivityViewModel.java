@@ -19,6 +19,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     MutableLiveData<Long> birthDate = new MutableLiveData<>();
     MutableLiveData<String> pictureUri = new MutableLiveData<>();
     MutableLiveData<Boolean> buttonEnabled = new MutableLiveData<>();
+    MutableLiveData<Boolean> moveToBirthdayScreen = new MutableLiveData<>();
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
@@ -50,6 +51,9 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
 
+    public MutableLiveData<Boolean> getMoveToBirthdayScreen() {
+        return moveToBirthdayScreen;
+    }
 
     public MutableLiveData<Boolean> getButtonEnabled() {
         return buttonEnabled;
