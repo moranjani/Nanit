@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools">
+
+<data>
+
+    <import type="moranjani.nanitbday.Utils.DateConverter" />
+
+    <variable
+        name="model"
+        type="moranjani.nanitbday.view_models.MainActivityViewModel" />
+
+    <variable
+        name="iBirthdayFragment"
+        type="moranjani.nanitbday.fragments.IBirthdayFragment" />
+</data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/mainImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:src="@drawable/android_elephant_popup"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/pictureImageView"
+            android:layout_width="182dp"
+            android:layout_height="166dp"
+            android:elevation="-1dp"
+            android:src="@drawable/default_place_holder_yellow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.75" />
+
+        <ImageView
+            android:id="@+id/closeBtnImageView"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_close_black_24dp"
+            android:tint="@color/nanit_primary"
+            app:layout_constraintStart_toStartOf="@id/mainImageView"
+            app:layout_constraintEnd_toEndOf="@id/mainImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_marginStart="4dp"
+            app:layout_goneMarginTop="4dp"/>
+
+        <ImageView
+            android:id="@+id/cameraImageView"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/camera_icon_yellow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.588"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.538" />
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="@string/birthday_title"
+            android:textAllCaps="true"
+            android:textColor="@color/nanit_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.05"
+            tools:text="TODAY CRISTIANA RONALDO IS" />
+
+        <ImageView
+            android:id="@+id/ageView"
+            android:layout_width="50dp"
+            android:layout_height="56dp"
+            android:src="@drawable/n5"
+            app:layout_constraintBottom_toTopOf="@+id/ageTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+
+        <ImageView
+            android:id="@+id/windLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/left_swirls"
+            app:layout_constraintBottom_toBottomOf="@id/ageView"
+            app:layout_constraintEnd_toStartOf="@id/ageView"
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toStartOf="@id/mainImageView"
+            app:layout_constraintTop_toTopOf="@id/ageView" />
+
+
+        <ImageView
+            android:id="@+id/windRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right_swirls"
+            app:layout_constraintBottom_toBottomOf="@id/ageView"
+            app:layout_constraintEnd_toEndOf="@id/mainImageView"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintStart_toEndOf="@id/ageView"
+            app:layout_constraintTop_toTopOf="@id/ageView" />
+
+        <TextView
+            android:id="@+id/ageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/age_desription"
+            android:textAllCaps="true"
+            android:textColor="@color/nanit_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/shareTextView"
+            app:layout_constraintEnd_toEndOf="@id/mainImageView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@id/mainImageView"
+            app:layout_constraintTop_toBottomOf="@id/ageView" />
+
+        <TextView
+            android:id="@+id/shareTextView"
+            android:layout_width="133dp"
+            android:layout_height="32dp"
+            android:background="@drawable/btn_share"
+            android:drawableEnd="@drawable/ic_share_pink"
+            android:drawablePadding="6dp"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/share_the_news"
+            android:textColor="@color/nanit_pink"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="@id/mainImageView"
+            app:layout_constraintStart_toStartOf="@id/mainImageView"
+            app:layout_constraintTop_toBottomOf="@id/ageTextView" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.45" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
