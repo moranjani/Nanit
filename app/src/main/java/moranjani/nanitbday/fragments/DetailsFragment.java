@@ -109,6 +109,7 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
 
     @Override
     public void onContinueButtonClicked() {
+        GeneralUtils.hideKeyboard(binding.getRoot());
         viewModel.getMoveToBirthdayScreen().setValue(true);
     }
 

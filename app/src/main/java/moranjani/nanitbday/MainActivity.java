@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import moranjani.nanitbday.fragments.BirthdayFragment;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         setObservers();
-        moveToFragment(DetailsFragment.getNewInstance(), DetailsFragment.class.getSimpleName());
+        moveToFragment(DetailsFragment.getNewInstance(), DetailsFragment.class.getSimpleName(), false);
     }
 
 
@@ -33,17 +34,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(Boolean shouldMove) {
                 if (shouldMove) {
-                  moveToFragment(BirthdayFragment.getNewInstance(), BirthdayFragment.class.getSimpleName());
+                  moveToFragment(BirthdayFragment.getNewInstance(), BirthdayFragment.class.getSimpleName(), true);
                 }
             }
         });
     }
 
-    private void moveToFragment(Fragment fragment, String tag) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.host_container, fragment, tag)
-                .addToBackStack(tag)
-                .commit();
+    private void moveToFragment(Fragment fragment, String tag, boolean addToBackStack) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction()
+                .replace(R.id.host_container, fragment, tag);
+        if (addToBackStack) {
+            ft.addToBackStack(tag);
+        }
+        ft.commit();
     }
 
 

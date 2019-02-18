@@ -3,16 +3,21 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="moranjani.nanitbday.Utils.DateConverter"/>
-        <variable name="model" type="moranjani.nanitbday.view_models.MainActivityViewModel"/>
-        <variable name="iDetailsFragment" type="moranjani.nanitbday.fragments.IDetailsFragment"/>
+
+        <import type="moranjani.nanitbday.Utils.DateConverter" />
+
+        <variable
+            name="model"
+            type="moranjani.nanitbday.view_models.MainActivityViewModel" />
+
+        <variable
+            name="iDetailsFragment"
+            type="moranjani.nanitbday.fragments.IDetailsFragment" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/content"
@@ -28,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="40dp"
+                android:gravity="center_horizontal"
                 android:text="@string/app_title" />
 
             <TextView
@@ -61,15 +67,15 @@
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:ellipsize="end"
+                android:focusable="true"
                 android:hint="@string/select_a_date"
                 android:inputType="none"
                 android:maxLines="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="@{DateConverter.dateToString(model.birthDate)}"
                 android:onClick="@{() -> iDetailsFragment.onBirthDateClicked()}"
-                />
+                android:text="@{DateConverter.dateToString(model.birthDate)}" />
+
             <TextView
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
@@ -83,31 +89,27 @@
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:drawableLeft="@drawable/ic_photo_camera_black_24dp"
                 android:drawablePadding="4dp"
-                android:gravity="center_vertical"
-                android:singleLine="true"
                 android:ellipsize="start"
-                android:clickable="true"
                 android:focusable="true"
+                android:gravity="center_vertical"
                 android:hint="@string/photo_hint"
-                android:text="@{model.pictureUri}"
-                android:onClick="@{() -> iDetailsFragment.onSelectPictureClicked()}"/>
+                android:onClick="@{() -> iDetailsFragment.onSelectPictureClicked()}"
+                android:singleLine="true"
+                android:text="@{model.pictureUri}" />
+
+            <Button
+                android:id="@+id/continue_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:enabled="@{safeUnbox(model.buttonEnabled)}"
+                android:onClick="@{() -> iDetailsFragment.onContinueButtonClicked()}"
+                android:text="@string/show_birthday_screen" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/continue_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:enabled="@{safeUnbox(model.buttonEnabled)}"
-            android:text="@string/show_birthday_screen"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/content"
-            android:onClick="@{() -> iDetailsFragment.onContinueButtonClicked()}"/>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
