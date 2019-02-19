@@ -4,13 +4,16 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools">
 
 <data>
-
     <import type="moranjani.nanitbday.Utils.DateConverter" />
+    <import type="moranjani.nanitbday.Utils.BindingAdapters" />
+    <import type="moranjani.nanitbday.Utils.GeneralUtils"/>
 
     <variable
         name="model"
-        type="moranjani.nanitbday.view_models.MainActivityViewModel" />
-
+        type="moranjani.nanitbday.view_models.BirthdayFragmentViewModel" />
+    <variable
+        name="activityModel"
+        type="moranjani.nanitbday.view_models.MainActivityViewModel"/>
     <variable
         name="iBirthdayFragment"
         type="moranjani.nanitbday.fragments.IBirthdayFragment" />
@@ -27,7 +30,8 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            android:src="@drawable/android_elephant_popup"
+            imageViewRes="@{model.mainImageViewRes, default=@drawable/android_elephant_popup}"
+            tools:src="@drawable/android_elephant_popup"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +43,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_width="182dp"
             android:layout_height="166dp"
             android:elevation="-1dp"
-            android:src="@drawable/default_place_holder_yellow"
+            tools:src="@drawable/default_place_holder_yellow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,13 +64,17 @@ xmlns:tools="http://schemas.android.com/tools">
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintVertical_bias="0.0"
             android:layout_marginStart="4dp"
-            app:layout_goneMarginTop="4dp"/>
+            app:layout_goneMarginTop="4dp"
+            android:clickable="true"
+            android:onClick="@{() -> iBirthdayFragment.onCloseButtonClicked()}"/>
+        />
 
         <ImageView
             android:id="@+id/cameraImageView"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:src="@drawable/camera_icon_yellow"
+            imageViewRes="@{model.cameraImageRes, default=@drawable/camera_icon_yellow}"
+            tools:src="@drawable/camera_icon_yellow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.588"
@@ -81,7 +89,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="2"
-            android:text="@string/birthday_title"
+            android:text="@{GeneralUtils.formatString(model.nameTemplate, activityModel.name)}"
             android:textAllCaps="true"
             android:textColor="@color/nanit_primary"
             android:textSize="16sp"
@@ -98,7 +106,8 @@ xmlns:tools="http://schemas.android.com/tools">
             android:id="@+id/ageView"
             android:layout_width="50dp"
             android:layout_height="56dp"
-            android:src="@drawable/n5"
+            imageViewRes="@{model.ageRes, default=@drawable/n5}"
+            tools:src="@drawable/n5"
             app:layout_constraintBottom_toTopOf="@+id/ageTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -133,7 +142,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_height="wrap_content"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@string/age_desription"
+            android:text="@{model.yearsOrMonths}"
             android:textAllCaps="true"
             android:textColor="@color/nanit_primary"
             android:textSize="16sp"

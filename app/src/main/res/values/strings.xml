@@ -17,4 +17,6 @@
     <string name="share_the_news">Share the news</string>
     <string name="birthday_title">today %s is</string>
     <string name="age_desription">%s old!</string>
+    <string name="years">years</string>
+    <string name="months">months</string>
 </resources>

@@ -4,8 +4,13 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import androidx.databinding.InverseMethod;
+
+import static java.util.Calendar.DATE;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
 
 public class DateConverter {
 
@@ -29,9 +34,6 @@ public class DateConverter {
     }
 
 
-
-
-
     public static String getMillisAsString(long milliSeconds) {
         return geMillisAsStringIWithFormat(milliSeconds, DATE_DOTS_FORMAT);
     }
@@ -48,8 +50,6 @@ public class DateConverter {
 
 
     }
-
-
 
 
     public static long stringToMilliseconds(String formattedDate, SimpleDateFormat dateFormat) {
@@ -70,4 +70,34 @@ public class DateConverter {
         val.setTimeInMillis(millis);
         return val;
     }
+
+
+    public static int getDiffYears(long first, long last) {
+        Calendar a = getCalendar(first);
+        Calendar b = getCalendar(last);
+        int diff = b.get(YEAR) - a.get(YEAR);
+        if (a.get(MONTH) > b.get(MONTH) ||
+                (a.get(MONTH) == b.get(MONTH) && a.get(DATE) > b.get(DATE))) {
+            diff--;
+        }
+        return diff;
+    }
+
+    public static int getDiffMonths(long first, long last) {
+        Calendar a = getCalendar(first);
+        Calendar b = getCalendar(last);
+        int diff = b.get(MONTH) - a.get(MONTH);
+        if ((a.get(MONTH) == b.get(MONTH) && a.get(DATE) > b.get(DATE))) {
+            diff--;
+        }
+        return diff;
+    }
+
+    public static Calendar getCalendar(long date) {
+        Calendar cal = Calendar.getInstance(Locale.US);
+        cal.setTimeInMillis(date);
+        return cal;
+
+    }
+
 }

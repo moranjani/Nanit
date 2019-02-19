@@ -18,4 +18,8 @@ public class GeneralUtils {
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+    public static String formatString(String template, String param) {
+        return String.format(template, param);
+    }
 }
