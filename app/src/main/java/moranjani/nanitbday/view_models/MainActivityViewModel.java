@@ -59,6 +59,10 @@ public class MainActivityViewModel extends AndroidViewModel {
         return buttonEnabled;
     }
 
+    public void setMoveToBirthdayScreen(boolean shouldMove) {
+        moveToBirthdayScreen.setValue(shouldMove);
+    }
+
     public MutableLiveData<String> getPictureUri() {
         return pictureUri;
     }
@@ -70,6 +74,5 @@ public class MainActivityViewModel extends AndroidViewModel {
     public MutableLiveData<String> getName() {
         return name;
     }
-
 
 }

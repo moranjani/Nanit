@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         viewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         setObservers();
-        moveToFragment(DetailsFragment.getNewInstance(), DetailsFragment.class.getSimpleName(), false);
+        if (savedInstanceState == null) {
+            moveToFragment(DetailsFragment.getNewInstance(), DetailsFragment.class.getSimpleName(), false);
+        }
     }
 
 
@@ -34,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(Boolean shouldMove) {
                 if (shouldMove) {
-                  moveToFragment(BirthdayFragment.getNewInstance(), BirthdayFragment.class.getSimpleName(), true);
+                    viewModel.setMoveToBirthdayScreen(false);
+                    moveToFragment(BirthdayFragment.getNewInstance(), BirthdayFragment.class.getSimpleName(), true);
                 }
             }
         });
