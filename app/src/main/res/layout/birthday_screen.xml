@@ -50,6 +50,7 @@ xmlns:tools="http://schemas.android.com/tools">
         app:layout_constraintHeight_percent="0.4"
         android:elevation="-1dp"
         android:scaleType="centerCrop"
+        imageViewRes="@{model.picPlaceHolderImageRes}"
         tools:src="@drawable/default_place_holder_yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -54,10 +54,13 @@ public class BirthdayFragment extends Fragment implements IBirthdayFragment {
     }
 
     private void loadPicture() {
-        File f = new File(mainActivityViewModel.getPictureUri().getValue());
-        Picasso.get().load(f)
-                .placeholder(model.getPicPlaceHolderImageRes())
-                .into(binding.pictureImageView);
+        String uri = mainActivityViewModel.getPictureUri().getValue();
+        if (uri != null) {
+            File f = new File(mainActivityViewModel.getPictureUri().getValue());
+            Picasso.get().load(f)
+                    .placeholder(model.getPicPlaceHolderImageRes())
+                    .into(binding.pictureImageView);
+        }
     }
 
     @Override
