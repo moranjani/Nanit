@@ -59,10 +59,6 @@ public class MainActivityViewModel extends AndroidViewModel {
         return buttonEnabled;
     }
 
-    public void setMoveToBirthdayScreen(boolean shouldMove) {
-        moveToBirthdayScreen.setValue(shouldMove);
-    }
-
     public MutableLiveData<String> getPictureUri() {
         return pictureUri;
     }
@@ -75,4 +71,19 @@ public class MainActivityViewModel extends AndroidViewModel {
         return name;
     }
 
+    public void setMoveToBirthdayScreen(boolean shouldMove) {
+        moveToBirthdayScreen.setValue(shouldMove);
+    }
+
+    public void setName(String name) {
+        this.name.setValue(name);
+    }
+
+    public void setBirthDate(Long birthDate) {
+        this.birthDate.setValue(birthDate);
+    }
+
+    public void setPictureUri(String pictureUri) {
+        this.pictureUri.setValue(pictureUri);
+    }
 }

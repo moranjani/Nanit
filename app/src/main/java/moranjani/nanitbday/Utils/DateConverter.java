@@ -35,10 +35,10 @@ public class DateConverter {
 
 
     public static String getMillisAsString(long milliSeconds) {
-        return geMillisAsStringIWithFormat(milliSeconds, DATE_DOTS_FORMAT);
+        return geMillisAsStringWithFormat(milliSeconds, DATE_DOTS_FORMAT);
     }
 
-    public static String geMillisAsStringIWithFormat(long milliSeconds, String dateFormat) {
+    public static String geMillisAsStringWithFormat(long milliSeconds, String dateFormat) {
 
         // Create a DateFormatter object for displaying date in specified format.
         DateFormat formatter = new SimpleDateFormat(dateFormat);

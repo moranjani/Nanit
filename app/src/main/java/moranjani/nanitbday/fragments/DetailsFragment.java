@@ -71,7 +71,7 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
             public void onImagesPicked(@NonNull List<File> imageFiles,
                                        EasyImage.ImageSource source, int type) {
                 if (imageFiles.size() > 0 && imageFiles.get(0) != null) {
-                    viewModel.getPictureUri().setValue(imageFiles.get(0).getPath());
+                    viewModel.setPictureUri(imageFiles.get(0).getPath());
                 }
             }
 
@@ -95,7 +95,7 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                viewModel.getName().setValue(s.toString());
+                viewModel.setName(s.toString());
                 viewModel.refreshButtonEnabledState();
             }
         });
@@ -132,7 +132,7 @@ public class DetailsFragment extends Fragment implements IDetailsFragment {
                         calendar.set(Calendar.MONTH, monthOfYear);
                         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         long selectedDate = calendar.getTimeInMillis();
-                        viewModel.getBirthDate().setValue(selectedDate);
+                        viewModel.setBirthDate(selectedDate);
                         viewModel.refreshButtonEnabledState();
                     }
                 };
